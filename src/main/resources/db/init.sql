@@ -65,3 +65,8 @@ COMMENT = '프로젝트';
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+ALTER TABLE `sq-pm`.`account` 
+ADD COLUMN `refresh_token` VARCHAR(36) NULL COMMENT '계정 리프레시토큰' AFTER `nickname`,
+ADD COLUMN `refresh_token_expired_at` DATETIME(3) NULL COMMENT '리프레시토큰 만료일시' AFTER `refreshToken`;

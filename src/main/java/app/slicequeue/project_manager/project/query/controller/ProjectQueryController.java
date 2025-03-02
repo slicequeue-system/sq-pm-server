@@ -1,10 +1,14 @@
-package app.slicequeue.project_manager.project.controller;
+package app.slicequeue.project_manager.project.query.controller;
 
 import app.slicequeue.project_manager.common.dto.CommonResponse;
-import app.slicequeue.project_manager.project.dto.*;
+import app.slicequeue.project_manager.project.query.dto.ProjectDetailResponse;
+import app.slicequeue.project_manager.project.query.dto.ProjectListItemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
 import java.util.List;
@@ -12,26 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/projects")
 @RequiredArgsConstructor
-public class ProjectController {
-
-    @PostMapping
-    public CommonResponse<ProjectIdResponse> create(@RequestBody ProjectCreateRequest request) {
-        // TODO 구현
-        return CommonResponse.success(ProjectIdResponse.id(123L));
-    }
-
-    @PutMapping("/{projectId}")
-    public CommonResponse<ProjectIdResponse> update(@PathVariable Long projectId,
-                                                    @RequestBody ProjectUpdateRequest request) {
-        // TODO 구현
-        return CommonResponse.success(ProjectIdResponse.id(123L));
-    }
-
-    @DeleteMapping("/{projectId}")
-    public CommonResponse<ProjectIdResponse> delete(@PathVariable Long projectId) {
-        // TODO 구현
-        return CommonResponse.success(ProjectIdResponse.id(123L));
-    }
+public class ProjectQueryController {
 
     @GetMapping
     public CommonResponse<List<ProjectListItemResponse>> readAll(Pageable pageable) {

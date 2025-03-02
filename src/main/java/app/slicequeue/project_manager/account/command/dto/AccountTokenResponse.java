@@ -1,4 +1,4 @@
-package app.slicequeue.project_manager.account.dto;
+package app.slicequeue.project_manager.account.command.dto;
 
 import lombok.Getter;
 

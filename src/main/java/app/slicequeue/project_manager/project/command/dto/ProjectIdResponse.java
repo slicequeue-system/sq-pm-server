@@ -1,6 +1,5 @@
-package app.slicequeue.project_manager.project.dto;
+package app.slicequeue.project_manager.project.command.dto;
 
-import app.slicequeue.project_manager.common.CommonConstants;
 import org.springframework.util.Assert;
 
 import static app.slicequeue.project_manager.common.CommonConstants.Message.VALID_NOT_NULL;

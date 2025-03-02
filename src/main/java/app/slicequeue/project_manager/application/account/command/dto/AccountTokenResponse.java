@@ -1,5 +1,7 @@
 package app.slicequeue.project_manager.application.account.command.dto;
 
+import app.slicequeue.project_manager.config.security.JwtUtil;
+import app.slicequeue.project_manager.domain.account.model.Account;
 import lombok.Getter;
 
 import java.time.Instant;
@@ -25,5 +27,11 @@ public class AccountTokenResponse {
 
     public static AccountTokenResponse of(UUID refreshToken, Instant refreshTokenExpiredAt, String accessToken, Instant expiredAt) {
         return new AccountTokenResponse(refreshToken, accessToken, expiredAt, refreshTokenExpiredAt);
+    }
+
+    public static AccountTokenResponse of(Account account, JwtUtil.JwtTokenResult jwtTokenResult) {
+        return new AccountTokenResponse(account.getRefreshToken(), jwtTokenResult.accessToken(),
+                jwtTokenResult.expiredDate().toInstant(),
+                account.getRefreshTokenExpiredAt());
     }
 }

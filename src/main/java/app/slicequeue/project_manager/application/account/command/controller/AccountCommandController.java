@@ -4,7 +4,10 @@ import app.slicequeue.project_manager.application.account.command.dto.AccountAcc
 import app.slicequeue.project_manager.application.account.command.dto.AccountLoginRequest;
 import app.slicequeue.project_manager.application.account.command.dto.AccountTokenResponse;
 import app.slicequeue.project_manager.application.account.command.service.AccountCommandService;
+import app.slicequeue.project_manager.domain.account.model.Account;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +26,10 @@ public class AccountCommandController {
     }
 
     @PostMapping("/access-token")
-    public AccountTokenResponse refreshAccessToken(@RequestBody AccountAccessTokenRequest request)  {
-        return commandService.refreshToken(request);
+    public AccountTokenResponse refreshAccessToken(
+            @AuthenticationPrincipal Account account,
+            @RequestBody @Valid AccountAccessTokenRequest request)  {
+        return commandService.refreshToken(account, request);
     }
 }
 

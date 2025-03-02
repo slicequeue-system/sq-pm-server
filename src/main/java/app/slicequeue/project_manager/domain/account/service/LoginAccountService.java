@@ -28,9 +28,6 @@ public class LoginAccountService {
         JwtUtil.JwtTokenResult jwtTokenResult = jwtUtil.generateToken(account.getId(), List.of());
         account.generateRefreshToken(jwtTokenResult);
 
-        return AccountTokenResponse.of(account.getRefreshToken(),
-                account.getRefreshTokenExpiredAt(),
-                jwtTokenResult.accessToken(),
-                jwtTokenResult.expiredDate().toInstant());
+        return AccountTokenResponse.of(account, jwtTokenResult);
     }
 }

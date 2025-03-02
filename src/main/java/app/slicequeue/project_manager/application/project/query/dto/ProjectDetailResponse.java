@@ -1,6 +1,6 @@
 // ProjectDetailResponse.java
 
-package app.slicequeue.project_manager.project.query.dto;
+package app.slicequeue.project_manager.application.project.query.dto;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package app.slicequeue.project_manager.project.command.dto;
+package app.slicequeue.project_manager.application.project.command.dto;
 
 import java.time.Instant;
 

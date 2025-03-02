@@ -1,8 +1,8 @@
-package app.slicequeue.project_manager.project.query.controller;
+package app.slicequeue.project_manager.application.project.query.controller;
 
+import app.slicequeue.project_manager.application.project.query.dto.ProjectListItemResponse;
 import app.slicequeue.project_manager.common.dto.CommonResponse;
-import app.slicequeue.project_manager.project.query.dto.ProjectDetailResponse;
-import app.slicequeue.project_manager.project.query.dto.ProjectListItemResponse;
+import app.slicequeue.project_manager.application.project.query.dto.ProjectDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;

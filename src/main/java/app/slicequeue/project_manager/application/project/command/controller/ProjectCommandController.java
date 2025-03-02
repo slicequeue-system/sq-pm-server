@@ -1,9 +1,9 @@
-package app.slicequeue.project_manager.project.command.controller;
+package app.slicequeue.project_manager.application.project.command.controller;
 
+import app.slicequeue.project_manager.application.project.command.dto.ProjectCreateRequest;
+import app.slicequeue.project_manager.application.project.command.dto.ProjectUpdateRequest;
 import app.slicequeue.project_manager.common.dto.CommonResponse;
-import app.slicequeue.project_manager.project.command.dto.ProjectCreateRequest;
-import app.slicequeue.project_manager.project.command.dto.ProjectIdResponse;
-import app.slicequeue.project_manager.project.command.dto.ProjectUpdateRequest;
+import app.slicequeue.project_manager.application.project.command.dto.ProjectIdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

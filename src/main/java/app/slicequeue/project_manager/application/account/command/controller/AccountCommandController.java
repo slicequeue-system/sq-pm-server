@@ -1,18 +1,14 @@
-package app.slicequeue.project_manager.account.command.controller;
+package app.slicequeue.project_manager.application.account.command.controller;
 
-import app.slicequeue.project_manager.account.command.dto.AccountAccessTokenRequest;
-import app.slicequeue.project_manager.account.command.dto.AccountLoginRequest;
-import app.slicequeue.project_manager.account.command.dto.AccountTokenResponse;
-import app.slicequeue.project_manager.account.command.service.AccountCommandService;
+import app.slicequeue.project_manager.application.account.command.dto.AccountAccessTokenRequest;
+import app.slicequeue.project_manager.application.account.command.dto.AccountLoginRequest;
+import app.slicequeue.project_manager.application.account.command.dto.AccountTokenResponse;
+import app.slicequeue.project_manager.application.account.command.service.AccountCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/accounts")

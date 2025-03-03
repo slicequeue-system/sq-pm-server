@@ -16,21 +16,38 @@ import java.time.Instant;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @MappedSuperclass
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BaseTimeEntity {
 
     @CreationTimestamp
     @Comment("생성일시")
     @Column(updatable = false)
-    private Instant createdAt;
+    private final Instant createdAt;
 
     @UpdateTimestamp
     @Comment("수정일시")
     @Column
     private Instant updatedAt;
 
+    @Comment("삭제일시")
+    @Column
+    private Instant deletedAt;
+
+    protected BaseTimeEntity() {
+        this.createdAt = Instant.now();
+        this.updatedAt = this.createdAt;
+    }
+
     protected BaseTimeEntity(Instant createdAt, Instant updatedAt) {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    protected void nowUpdateAt() {
+        this.updatedAt = Instant.now();
+    }
+
+    protected void nowDeletedAt() {
+        this.deletedAt = Instant.now();
+        this.updatedAt = this.deletedAt;
     }
 }

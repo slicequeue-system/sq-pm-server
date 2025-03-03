@@ -2,6 +2,8 @@
 
 package app.slicequeue.project_manager.application.project.query.dto;
 
+import app.slicequeue.project_manager.domain.account.model.Account;
+import app.slicequeue.project_manager.domain.project.model.Project;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -52,7 +54,8 @@ public class ProjectDetailResponse {
     private Writer writer;
 
     @Builder
-    public ProjectDetailResponse(long id, String name, String code, Instant startAt, Instant endAt, String memo, Instant updatedAt, Instant createdAt, Writer writer) {
+    private ProjectDetailResponse(long id, String name, String code, Instant startAt, Instant endAt, String memo,
+                            Instant updatedAt, Instant createdAt, Writer writer) {
         this.id = id;
         this.name = name;
         this.code = code;
@@ -63,6 +66,21 @@ public class ProjectDetailResponse {
         this.createdAt = createdAt;
         this.writer = writer;
     }
+
+    public ProjectDetailResponse(Project project, Account account) {
+        this(
+                project.getId(),
+                project.getName(),
+                project.getCode(),
+                project.getStartAt(),
+                project.getEndAt(),
+                project.getMemo(),
+                project.getUpdatedAt(),
+                project.getCreatedAt(),
+                Writer.from(account)
+        );
+    }
+
 
     /**
      * 작성자 정보
@@ -80,9 +98,16 @@ public class ProjectDetailResponse {
         private String nickname;
 
         @Builder
-        public Writer(long userId, String nickname) {
+        private Writer(long userId, String nickname) {
             this.userId = userId;
             this.nickname = nickname;
+        }
+
+        public static Writer from(Account account) {
+            return Writer.builder()
+                    .userId(account.getId())
+                    .nickname(account.getNickname())
+                    .build();
         }
     }
 

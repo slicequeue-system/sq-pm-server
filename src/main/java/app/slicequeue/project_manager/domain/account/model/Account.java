@@ -9,18 +9,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 import org.hibernate.type.SqlTypes;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static app.slicequeue.project_manager.common.CommonConstants.ValidMessage.POSTFIX_NOT_BLANK;
 
@@ -36,7 +34,7 @@ public class Account extends BaseTimeEntity implements UserDetails {
     @NotBlank(message = "email" + POSTFIX_NOT_BLANK)
     private String email;
     @NotBlank(message = "pwd" + POSTFIX_NOT_BLANK)
-    private String pwd;
+    private String pwd; // 단방향 암호화된 비밀번호 저장
     private String nickname;
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private UUID refreshToken;
@@ -89,5 +87,13 @@ public class Account extends BaseTimeEntity implements UserDetails {
     public void generateRefreshToken(JwtUtil.JwtTokenResult jwtTokenResult) {
         this.refreshToken = UUID.randomUUID();
         this.refreshTokenExpiredAt = jwtTokenResult.expiredDate().toInstant().plus(60, ChronoUnit.DAYS);
+    }
+
+    public void encodePwd(PasswordEncoder passwordEncoder) {
+        this.pwd = passwordEncoder.encode(this.pwd);
+    }
+
+    public boolean matchPassword(String rawPwd, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(rawPwd, this.pwd);
     }
 }

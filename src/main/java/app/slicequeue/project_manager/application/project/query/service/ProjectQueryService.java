@@ -1,7 +1,10 @@
 package app.slicequeue.project_manager.application.project.query.service;
 
+import app.slicequeue.project_manager.application.project.query.dto.ProjectDetailResponse;
 import app.slicequeue.project_manager.application.project.query.dto.ProjectListItemResponse;
 import app.slicequeue.project_manager.common.exception.BadRequestException;
+import app.slicequeue.project_manager.common.exception.NotFoundException;
+import app.slicequeue.project_manager.domain.account.model.Account;
 import app.slicequeue.project_manager.infrastructure.project.repository.ProjectQueryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,7 +22,7 @@ public class ProjectQueryService {
     private static final int LIMIT_PAGE_SIZE = 100;
     private static final int LIMIT_PAGE_NUMBER = 10000;
 
-    public Page<ProjectListItemResponse> readAll(Pageable pageable) {
+    public Page<ProjectListItemResponse> readAllProjects(Pageable pageable) {
         if (pageable.getPageSize() > LIMIT_PAGE_SIZE) {
             throw new BadRequestException("잘못된 페이지 크기입니다. 최대 " + LIMIT_PAGE_SIZE);
         }
@@ -27,5 +30,10 @@ public class ProjectQueryService {
             throw new BadRequestException("잘못된 페이지 번호입니다. 최대 " + LIMIT_PAGE_NUMBER);
         }
         return projectQueryRepository.findPage(pageable);
+    }
+
+    public ProjectDetailResponse readProject(Long projectId, Account account) {
+        return projectQueryRepository.findDetailResponseById(projectId)
+                .orElseThrow(NotFoundException.getSupplierNotFoundException("프로젝트"));
     }
 }

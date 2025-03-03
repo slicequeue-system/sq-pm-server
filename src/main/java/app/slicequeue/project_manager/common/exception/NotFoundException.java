@@ -4,8 +4,13 @@ import app.slicequeue.project_manager.common.base.BaseRuntimeException;
 import org.springframework.http.HttpStatus;
 
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class NotFoundException  extends BaseRuntimeException {
+
+    public static Supplier<NotFoundException> getSupplierNotFoundException(String prefix) {
+        return () -> new NotFoundException(String.format("%s 데이터를 찾을 수 없습니다", prefix));
+    }
 
     public NotFoundException(String message) {
         super(HttpStatus.NOT_FOUND, message, null);

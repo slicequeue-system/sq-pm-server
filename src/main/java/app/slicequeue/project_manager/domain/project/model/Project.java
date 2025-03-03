@@ -28,9 +28,9 @@ import static app.slicequeue.project_manager.common.CommonConstants.ValidMessage
         @Index(name = "idx_prj_account_id_start_at_end_at", columnList = "account_id, start_at, end_at"),
         @Index(name = "unq_prj_code", columnList = "code", unique = true)
 })
+@SQLRestriction("deleted_at IS NULL")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SQLRestriction("deleted_at IS NULL")
 public class Project extends BaseTimeEntity {
 
     private static final Duration DEFAULT_DURATION_END = Duration.of(180, ChronoUnit.DAYS);

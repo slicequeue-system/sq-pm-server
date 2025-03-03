@@ -70,3 +70,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 ALTER TABLE `sq-pm`.`account` 
 ADD COLUMN `refresh_token` VARCHAR(36) NULL COMMENT '계정 리프레시토큰' AFTER `nickname`,
 ADD COLUMN `refresh_token_expired_at` DATETIME(3) NULL COMMENT '리프레시토큰 만료일시' AFTER `refreshToken`;
+
+ALTER TABLE `sq-pm`.`account`
+CHANGE COLUMN `email` `email` VARCHAR(255) NOT NULL COMMENT '계정 이메일' ,
+CHANGE COLUMN `pwd` `pwd` VARCHAR(255) NOT NULL COMMENT '계정 비밀번호' ;

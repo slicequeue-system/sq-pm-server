@@ -7,6 +7,7 @@ import app.slicequeue.project_manager.config.security.JwtUtil;
 import app.slicequeue.project_manager.domain.account.model.Account;
 import app.slicequeue.project_manager.infrastructure.account.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,13 +17,14 @@ import java.util.List;
 public class LoginAccountService {
 
     private final AccountRepository accountRepository;
+    private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
     public AccountTokenResponse login(AccountLoginRequest request) {
         Account account =
                 accountRepository.findByEmail(request.getEmail()).orElseThrow(() -> new BadRequestException("아이디 " +
                         "비밀번호를 확인해주세요"));
-        if (!account.getPassword().equals(request.getSecretKey())) {
+        if (!account.matchPassword(request.getSecretKey(), passwordEncoder)) {
             throw new BadRequestException("아이디 비밀번호를 확인해주세요");
         }
         JwtUtil.JwtTokenResult jwtTokenResult = jwtUtil.generateToken(account.getId(), List.of());

@@ -1,5 +1,7 @@
 package app.slicequeue.project_manager.application.project.query.dto;
 
+import app.slicequeue.project_manager.domain.account.model.Account;
+import app.slicequeue.project_manager.domain.project.model.Project;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -46,14 +48,20 @@ public class ProjectListItemResponse {
     private Instant endAt;
 
     @Builder
-    public ProjectListItemResponse(long id, String name, String code, Instant startAt, Instant updatedAt, String writerNickname, Instant createdAt, Instant endAt) {
+    public ProjectListItemResponse(long id, String name, String code, Instant startAt, Instant endAt,
+                                   String writerNickname, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.name = name;
         this.code = code;
         this.startAt = startAt;
-        this.updatedAt = updatedAt;
+        this.endAt = endAt;
         this.writerNickname = writerNickname;
         this.createdAt = createdAt;
-        this.endAt = endAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public ProjectListItemResponse(Project project, Account account) {
+        this(project.getId(), project.getName(), project.getCode(), project.getStartAt(), project.getEndAt(),
+                account.getNickname(), project.getCreatedAt(), project.getUpdatedAt());
     }
 }

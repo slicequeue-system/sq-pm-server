@@ -16,7 +16,6 @@ import java.time.Instant;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @MappedSuperclass
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BaseTimeEntity {
 
     @CreationTimestamp
@@ -29,8 +28,14 @@ public class BaseTimeEntity {
     @Column
     private Instant updatedAt;
 
+    protected BaseTimeEntity() {
+        this.createdAt = Instant.now();
+        this.updatedAt = this.createdAt;
+    }
+
     protected BaseTimeEntity(Instant createdAt, Instant updatedAt) {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
 }

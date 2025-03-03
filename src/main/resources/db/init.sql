@@ -75,5 +75,7 @@ ALTER TABLE `sq-pm`.`account`
 CHANGE COLUMN `email` `email` VARCHAR(255) NOT NULL COMMENT '계정 이메일' ,
 CHANGE COLUMN `pwd` `pwd` VARCHAR(255) NOT NULL COMMENT '계정 비밀번호' ;
 
+ALTER TABLE `sq-pm`.`account`
+ADD COLUMN `deleted_at` DATETIME(3) NULL COMMENT '삭제 일시' AFTER `nickname`;
 ALTER TABLE `sq-pm`.`project`
 ADD COLUMN `deleted_at` DATETIME(3) NULL COMMENT '삭제 일시' AFTER `memo`;

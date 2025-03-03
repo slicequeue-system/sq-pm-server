@@ -21,12 +21,16 @@ public class BaseTimeEntity {
     @CreationTimestamp
     @Comment("생성일시")
     @Column(updatable = false)
-    private Instant createdAt;
+    private final Instant createdAt;
 
     @UpdateTimestamp
     @Comment("수정일시")
     @Column
     private Instant updatedAt;
+
+    @Comment("삭제일시")
+    @Column
+    private Instant deletedAt;
 
     protected BaseTimeEntity() {
         this.createdAt = Instant.now();
@@ -38,4 +42,12 @@ public class BaseTimeEntity {
         this.updatedAt = updatedAt;
     }
 
+    protected void nowUpdateAt() {
+        this.updatedAt = Instant.now();
+    }
+
+    protected void nowDeletedAt() {
+        this.deletedAt = Instant.now();
+        this.updatedAt = this.deletedAt;
+    }
 }

@@ -1,5 +1,6 @@
 package app.slicequeue.project_manager.application.project.command.dto;
 
+import app.slicequeue.project_manager.domain.project.model.Project;
 import org.springframework.util.Assert;
 
 import static app.slicequeue.project_manager.common.CommonConstants.Message.VALID_NOT_NULL;
@@ -20,6 +21,9 @@ public class ProjectIdResponse {
         this.id = id;
     }
 
+    public static ProjectIdResponse from(Project project) {
+        return new ProjectIdResponse(project.getId());
+    }
     public static ProjectIdResponse id(Long id) {
         return new ProjectIdResponse(id);
     }

@@ -1,6 +1,7 @@
 package app.slicequeue.project_manager.domain.project.model;
 
 import app.slicequeue.project_manager.application.project.command.dto.ProjectCreateRequest;
+import app.slicequeue.project_manager.application.project.command.dto.ProjectUpdateRequest;
 import app.slicequeue.project_manager.common.base.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.ValidationException;
@@ -10,6 +11,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.SoftDelete;
+import org.hibernate.annotations.Where;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -26,6 +30,7 @@ import static app.slicequeue.project_manager.common.CommonConstants.ValidMessage
 })
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SQLRestriction("deleted_at IS NULL")
 public class Project extends BaseTimeEntity {
 
     private static final Duration DEFAULT_DURATION_END = Duration.of(180, ChronoUnit.DAYS);
@@ -94,5 +99,17 @@ public class Project extends BaseTimeEntity {
             throw new ValidationException("endAt은 startAt 이후 최소 24시간 이상이어야 합니다."); // 메시지 추가
         }
         return endAt;
+    }
+
+    public void update(ProjectUpdateRequest request) {
+        this.name = request.getName();
+        this.startAt = checkStartAtValue(request.getStartAt());
+        this.endAt = checkEndAtValueAfterStartAt(request.getEndAt(), this.startAt);
+        this.memo = request.getMemo();
+        super.nowUpdateAt();
+    }
+
+    public void delete() {
+        this.nowDeletedAt();
     }
 }

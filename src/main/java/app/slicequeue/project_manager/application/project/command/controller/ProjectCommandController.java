@@ -25,15 +25,16 @@ public class ProjectCommandController {
     }
 
     @PutMapping("/{projectId}")
-    public CommonResponse<ProjectIdResponse> update(@PathVariable Long projectId,
-                                                    @RequestBody ProjectUpdateRequest request) {
-        // TODO 구현
-        return CommonResponse.success(ProjectIdResponse.id(123L));
+    public CommonResponse<ProjectIdResponse> update(
+            @AuthenticationPrincipal Account account,
+            @PathVariable Long projectId,
+            @RequestBody ProjectUpdateRequest request) {
+        return CommonResponse.success(projectCommandService.updateProject(projectId, request, account));
     }
 
     @DeleteMapping("/{projectId}")
-    public CommonResponse<ProjectIdResponse> delete(@PathVariable Long projectId) {
-        // TODO 구현
-        return CommonResponse.success(ProjectIdResponse.id(123L));
+    public CommonResponse<ProjectIdResponse> delete(@AuthenticationPrincipal Account account,
+                                                    @PathVariable Long projectId) {
+        return CommonResponse.success(projectCommandService.deleteProject(projectId, account));
     }
 }

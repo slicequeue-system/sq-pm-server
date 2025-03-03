@@ -21,7 +21,7 @@ public class AccountCommandController {
     private final AccountCommandService commandService;
 
     @PostMapping("/login")
-    public AccountTokenResponse login(@RequestBody AccountLoginRequest request) {
+    public AccountTokenResponse login(@RequestBody @Valid AccountLoginRequest request) {
         return commandService.login(request);
     }
 

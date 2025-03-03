@@ -20,3 +20,6 @@ spring:
 jwt:
   secret-key: ${JWT_SECRET_KEY:default-secret-key}
   expiration-time: ${JWT_EXPIRATION_TIME:1800000}
+
+secret:
+  super-key: ${SECRET_SUPER_KEY}

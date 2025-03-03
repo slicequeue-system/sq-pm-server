@@ -1,5 +1,6 @@
 package app.slicequeue.project_manager.domain.account.model;
 
+import app.slicequeue.project_manager.application.account.command.dto.AccountRegisterRequest;
 import app.slicequeue.project_manager.common.base.BaseTimeEntity;
 import app.slicequeue.project_manager.config.security.JwtUtil;
 import jakarta.persistence.*;
@@ -48,6 +49,15 @@ public class Account extends BaseTimeEntity implements UserDetails {
         this.email = email;
         this.pwd = pwd;
         this.nickname = nickname;
+    }
+
+    public static Account create(AccountRegisterRequest request, PasswordEncoder passwordEncoder) {
+        Account account = new Account();
+        account.email = request.getEmail();
+        account.pwd = request.getSecretKey();
+        account.encodePwd(passwordEncoder);
+        account.nickname = request.getNickname();
+        return account;
     }
 
     @Override
